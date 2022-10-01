@@ -12,18 +12,19 @@ let username = id("username"),
     successIcon = classes("success-icon"),
     failureIcon = classes("failure-icon");
 
-// Event Listener - Error messages
+// Event Listener - Error messages. This tells the function below what to display in error messages and when to open popup
 form.addEventListener("submit", (e)=>{
     e.preventDefault();   
 
-    engine(username, 0, "User name cannot be blank");
-    engine(email, 1, "Email cannot be blank");
-    engine(password, 2, "Password cannot be blank");
-    engine(birthday, 3, "Date of birth cannot be blank");
+    const usernameOk = engine(username, 0, "User name cannot be blank")
+    const emailOk = engine(email, 1, "Email cannot be blank")
+    const passwordOk = engine(password, 2, "Password cannot be blank")
+    const birthdayOk = engine(birthday, 3, "Date of birth cannot be blank")
+    if (!usernameOk && !emailOk && !passwordOk && !birthdayOk) openPopup();
 });
 
 
-// Popup
+// Popup declarations
 let popup = document.getElementById("popup");
 
 function openPopup() {
@@ -41,34 +42,16 @@ let engine = (id, serial, message) => {
         errorMsg[serial].innerHTML = message;
         failureIcon[serial].style.opacity = "1";
         successIcon[serial].style.opacity = "0";
+        return true;
     }
     else {
         errorMsg[serial].innerHTML = "";
         failureIcon[serial].style.opacity = "0";
         successIcon[serial].style.opacity = "1";
+        console.log(id);
+        return false;
     }
 }
 
 
-// This is for the popup window
-
-/* popUpButton = document.getElementById("submit")
-
-popUpButton.addEventListener("click", popUpNow);
-
-function popUpNow(e) {
-    e.preventDefault();
-
-    document.querySelector(".popup").style.visibility = "visible";
-}
-
-const closePopup = document.getElementById("close")
-
-closePopup.addEventListener("click", closePopup);
-
-function closePopup(e) {
-    e.preventDefault();
-
-    document.querySelector(".popup").style.visibility = "hidden";
-} */
 
